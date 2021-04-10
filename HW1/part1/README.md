@@ -1,6 +1,7 @@
-### 1. Compile: make 
-### 2. Execute: java Main
-### 3. Remove:  make clean
+### How to run
+1. Compile: make 
+2. Execute: java Main
+3. Remove:  make clean
 
 ### Grammar 
 
