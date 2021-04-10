@@ -34,8 +34,11 @@ num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 #### For non-terminals 
 First(exp)   = First(term) = First(factor) = {0,1,2,3,4,5,6,7,8,9,ε,(}
+
 First(exp2)  = {+,-,ε}
+
 First(term2) = {**,ε}
+
 First(num)   = {0,1,2,3,4,5,6,7,8,9,ε}
 
 #### For rules
