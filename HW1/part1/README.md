@@ -1,10 +1,10 @@
-##### Rules #####
+### Rules
 
 1) compile: make 
 2) execute: java Main
 3) remove:  make clean
 
-##### Grammar #####
+### Grammar 
 
 exp --> num | exp op exp | (exp)  
 
@@ -12,7 +12,7 @@ op  --> + | - | **
 
 num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
 
-##### LL(1) Grammar #####
+### LL(1) Grammar 
 
 1) exp    -> term exp2
 
@@ -31,7 +31,7 @@ num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 10) num   -> {0..9} num
 11)        | ε
 
-##### First Sets #####
+### First Sets 
 
 First(exp)   = First(term) = First(factor) = {0,1,2,3,4,5,6,7,8,9,ε,(}
 First(exp2)  = {+,-,ε}
@@ -55,7 +55,7 @@ First(#9)  = {(}
 First(#10) = {0,1,2,3,4,5,6,7,8,9}
 First(#11) = {ε}
 
-### Follow Sets ###
+### Follow Sets 
 
 Follow(exp)    = {$,)}
 Follow(exp2)   = Follow(exp) = {$,)}
@@ -64,7 +64,7 @@ Follow(term2)  = Follow(term) = {+,-,),$}
 Follow(factor) = First(term2) = {**,ε} = {**,Follow(term2)} = {**,+,-,),$}
 Follow(num)    = Follow(factor) = {**,+,-,),$}
 
-##### First+ Sets #####
+### First+ Sets 
 
 First+(#1)  = {0,1,2,3,4,5,6,7,8,9,(,),$}
 
@@ -83,7 +83,7 @@ First+(#9)  = {(}
 First+(#10) = {0,1,2,3,4,5,6,7,8,9}
 First+(#11) = {**,+,-,),$}
 
-##### Lookahead Table #####
+### Lookahead Table 
 
 * -------------------------------------------------------------------------------------------
 * 	        |     '0' ... '9'    |   '+'   |   '-'   |   '**'   |   $   |   '('   |   ')'   |    
