@@ -1,8 +1,6 @@
-### Rules
-
-1) compile: make 
-2) execute: java Main
-3) remove:  make clean
+### 1. Compile: make 
+### 2. Execute: java Main
+### 3. Remove:  make clean
 
 ### Grammar 
 
@@ -33,11 +31,13 @@ num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 ### First Sets 
 
+#### For non-terminals 
 First(exp)   = First(term) = First(factor) = {0,1,2,3,4,5,6,7,8,9,ε,(}
 First(exp2)  = {+,-,ε}
 First(term2) = {**,ε}
 First(num)   = {0,1,2,3,4,5,6,7,8,9,ε}
-----------------------------------------------------------------------
+
+#### For rules
 First(#1)  = {0,1,2,3,4,5,6,7,8,9,ε,(}
 
 First(#2)  = {+}
