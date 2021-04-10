@@ -69,7 +69,7 @@ Follow(term)   = First(exp2) = {+,-,ε} = {+,-,Follow(exp2)} = {+,-,),$}
 
 Follow(term2)  = Follow(term) = {+,-,),$}
 
-Follow(factor) = First(term2) = {* *,ε} = {* *,Follow(term2)} = {**,+,-,),$}
+Follow(factor) = First(term2) = {* ** *,ε} = {**,Follow(term2)} = {**,+,-,),$}
 
 Follow(num)    = Follow(factor) = {**,+,-,),$}
 
