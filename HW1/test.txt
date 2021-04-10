@@ -1,3 +1,0 @@
-Δίνουμε ένα specification σε έναν parser generator και μας παράγει έναν parser
-Που ο parser, συνδέεται με έναν scanner (που κι αυτόν τον φτιάξαμε με specification),
-parsάρει μια γλώσσα που εμείς την σκεφτήκαμε και βγάζει ως output μια άλλη γλώσσα (java)
