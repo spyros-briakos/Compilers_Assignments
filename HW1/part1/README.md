@@ -37,7 +37,7 @@ First(exp)   = First(term) = First(factor) = {0,1,2,3,4,5,6,7,8,9,ε,(}
 
 First(exp2)  = {+,-,ε}
 
-First(term2) = {**,ε}
+First(term2) = {** ,ε}
 
 First(num)   = {0,1,2,3,4,5,6,7,8,9,ε}
 
@@ -50,7 +50,7 @@ First(#4)  = {ε}
 
 First(#5)  = {0,1,2,3,4,5,6,7,8,9,ε,(}
 
-First(#6)  = {**}
+First(#6)  = {** }
 First(#7)  = {ε}
 
 First(#8)  = {0,1,2,3,4,5,6,7,8,9,ε}
@@ -69,9 +69,9 @@ Follow(term)   = First(exp2) = {+,-,ε} = {+,-,Follow(exp2)} = {+,-,),$}
 
 Follow(term2)  = Follow(term) = {+,-,),$}
 
-Follow(factor) = First(term2) = {* ** *,ε} = {**,Follow(term2)} = {**,+,-,),$}
+Follow(factor) = First(term2) = { ** ,ε} = { ** ,Follow(term2)} = {** ,+,-,),$}
 
-Follow(num)    = Follow(factor) = {**,+,-,),$}
+Follow(num)    = Follow(factor) = {** ,+,-,),$}
 
 ### First+ Sets 
 
