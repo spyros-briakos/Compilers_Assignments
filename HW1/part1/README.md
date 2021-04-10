@@ -13,22 +13,22 @@ num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 ### LL(1) Grammar 
 
-1) exp    -> term exp2FADSADSADSAD
+1) exp    -> term exp2
 
 2) exp2   -> + term exp2
-3)         | - term exp2
-4)         | ε
+3) | - term exp2
+4) | ε
 
 5) term   -> factor term2 
 
 6) term2  -> ** term
-7)         | ε
+7) | ε
 
 8) factor -> num
-9)         | (exp)
+9) | (exp)
 
 10) num   -> {0..9} num
-11)        | ε
+11) | ε
 
 ### First Sets 
 
@@ -69,7 +69,7 @@ Follow(term)   = First(exp2) = {+,-,ε} = {+,-,Follow(exp2)} = {+,-,),$}
 
 Follow(term2)  = Follow(term) = {+,-,),$}
 
-Follow(factor) = First(term2) = {**,ε} = {**,Follow(term2)} = {**,+,-,),$}
+Follow(factor) = First(term2) = {* *,ε} = {* *,Follow(term2)} = {**,+,-,),$}
 
 Follow(num)    = Follow(factor) = {**,+,-,),$}
 
