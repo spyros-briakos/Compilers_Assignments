@@ -13,7 +13,7 @@ num --> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 ### LL(1) Grammar 
 
-1) exp    -> term exp2
+1) exp    -> term exp2FADSADSADSAD
 
 2) exp2   -> + term exp2
 3)         | - term exp2
