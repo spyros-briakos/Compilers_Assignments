@@ -1,4 +1,4 @@
-##### Rules #####
+### Rules #####
 
 1) compile: make 
 2) execute: java Main
