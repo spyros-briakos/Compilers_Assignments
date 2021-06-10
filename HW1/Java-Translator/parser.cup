@@ -1,0 +1,125 @@
+/* Simple +/-/* expression language; parser evaluates constant expressions on the fly*/
+/**
+ *  Package and Import Specifications
+ */
+import java_cup.runtime.*;
+
+/**
+ *  Usercode Components
+ */
+parser code {:
+    // Connect this parser to a scanner!
+    Scanner s;
+    Parser(Scanner s){ this.s=s; }
+
+    void Construct(String e1,String e2) {
+        System.out.print("\n\n####################################################################\n\n");
+        System.out.println("public class Main {\n");
+        System.out.println("\tpublic static void main(String[] args) {");
+        System.out.print(e2);
+        System.out.println("\t}");
+        System.out.print(e1);
+        System.out.println("}");
+    }
+:}
+
+/* define how to connect to the scanner! */
+scan with {: return s.next_token(); :};
+
+/**
+ *  Symbol Lists
+ */
+
+/* Terminals (tokens returned by the scanner). */
+terminal               LPAREN, RPAREN, RBRACE, COMMA, MY_TOKEN;
+terminal               IF, ELSE, PREFIX, SUFFIX, CONCAT;   
+terminal String        STRING_LITERAL, IDENTIFIER;   
+
+/*  Non terminals */
+non terminal           program; 
+non terminal           func_decs, func_dec, inner_call, top_call, dec_call, dec_args, dec_args2, dec_args3; 
+non terminal           exprs, expr, inner_expr, body_func, inner_args, inner_args2, inner_args3;  
+non terminal           call_args, call_args2, call_args3, if_else, condition, inner_if, inner_cond;
+
+/**
+ *  Precedence Declarations
+ */
+precedence left IF;
+precedence left CONCAT;
+
+/**
+ *  The Grammar Rules
+ */
+program     ::= func_decs:e1 exprs:e2                                              {: Construct((String)e1,(String)e2);                                :}
+            ;
+/* Case: Function Declaration */
+func_decs   ::= func_decs:e2 func_dec:e1                                           {: RESULT = String.format("%s\n%s",e1,e2);                          :}
+            |                                                                      {: RESULT = String.format("");                                      :}
+            ;
+func_dec    ::= dec_call:e1 body_func:e2                                           {: RESULT = String.format("\tpublic static String "+e1+e2);         :}
+            ;
+dec_call    ::= IDENTIFIER:e1 dec_args:e2                                          {: RESULT = String.format("%s%s",e1,e2);                            :}
+            ; 
+dec_args    ::= LPAREN dec_args2:e1 MY_TOKEN                                       {: RESULT = String.format("(%s) ",e1);                              :}
+            ;
+dec_args2   ::= dec_args3:e1                                                       {: RESULT = String.format("%s",e1);                                 :}
+            |                                                                      {: RESULT = String.format("");                                      :}            
+            ;
+dec_args3   ::= dec_args3:e1 COMMA IDENTIFIER:e2                                   {: RESULT = String.format("%s, String %s",e1,e2);                   :}
+            |   IDENTIFIER:e1                                                      {: RESULT = String.format("String %s",e1);                          :}            
+            ;
+body_func   ::= inner_expr:e1 RBRACE                                               {: RESULT = String.format("{\n\t\treturn %s;\n\t}",e1);             :}    
+            ;
+/* Case: Expression */
+exprs       ::= expr:e1 exprs:e2                                                   {: RESULT = String.format("\t\tSystem.out.println(%s);\n%s",e1,e2); :}            
+            |                                                                      {: RESULT = String.format("");                                      :}            
+            ;
+expr        ::= STRING_LITERAL:e1                                                  {: RESULT = String.format("\"%s\"",e1);                             :}
+            |   top_call:e1                                                        {: RESULT = String.format("%s",e1);                                 :}
+            |   expr:e1 CONCAT expr:e2                                             {: RESULT = String.format("(%s + %s)",e1,e2);                       :}   
+            |   LPAREN expr:e1 RPAREN                                              {: RESULT = String.format("(%s)",e1);                               :}   
+            |   if_else:e1                                                         {: RESULT = String.format("(%s)",e1);                               :}  
+            ;
+inner_expr  ::= STRING_LITERAL:e1                                                  {: RESULT = String.format("\"%s\"",e1);                             :}
+            |   inner_call:e1                                                      {: RESULT = String.format("%s",e1);                                 :}
+            |   inner_expr:e1 CONCAT inner_expr:e2                                 {: RESULT = String.format("(%s + %s)",e1,e2);                       :}   
+            |   LPAREN inner_expr:e1 RPAREN                                        {: RESULT = String.format("(%s)",e1);                               :}   
+            |   inner_if:e1                                                        {: RESULT = String.format("(%s)",e1);                               :}  
+            |   IDENTIFIER:e1                                                      {: RESULT = String.format("%s",e1);                                 :}
+            ;
+/* Case: Top Call */
+top_call    ::= IDENTIFIER:e1 call_args:e2                                         {: RESULT = String.format("%s%s",e1,e2);                            :}
+            ;
+call_args   ::= LPAREN call_args2:e1 RPAREN                                        {: RESULT = String.format("(%s)",e1);                               :}
+            ;
+call_args2  ::= call_args3:e1                                                      {: RESULT = String.format("%s",e1);                                 :}
+            |                                                                      {: RESULT = String.format("");                                      :}            
+            ;
+call_args3  ::= call_args3:e1 COMMA expr:e2                                        {: RESULT = String.format("%s, %s",e1,e2);                          :}
+            |   expr:e1                                                            {: RESULT = String.format("%s",e1);                                 :}   
+            ;
+/* Case: Inner Call */
+inner_call  ::= IDENTIFIER:e1 inner_args:e2                                        {: RESULT = String.format("%s%s",e1,e2);                            :}
+            ;
+inner_args  ::= LPAREN inner_args2:e1 RPAREN                                       {: RESULT = String.format("(%s)",e1);                               :}
+            ;
+inner_args2 ::= inner_args3:e1                                                     {: RESULT = String.format("%s",e1);                                 :}
+            |                                                                      {: RESULT = String.format("");                                      :}            
+            ;
+inner_args3 ::= inner_args3:e1 COMMA inner_expr:e2                                 {: RESULT = String.format("%s, %s",e1,e2);                          :}
+            |   inner_expr:e1                                                      {: RESULT = String.format("%s",e1);                                 :}                 
+            ;
+/* Case: If else */
+if_else     ::= IF LPAREN condition:e1 RPAREN expr:e2 ELSE expr:e3                 {: RESULT = String.format("(%s) ? (%s) : (%s)",e1,e2,e3);           :}
+            ;
+/* Case: Condition */
+condition   ::= expr:e1 SUFFIX expr:e2                                             {: RESULT = String.format("%s.endsWith(%s)",e2,e1);                 :}
+            |   expr:e1 PREFIX expr:e2                                             {: RESULT = String.format("%s.startsWith(%s)",e2,e1);               :}
+            ;
+/* Case: Inner If else */
+inner_if    ::= IF LPAREN inner_cond:e1 RPAREN inner_expr:e2 ELSE inner_expr:e3    {: RESULT = String.format("(%s) ? (%s) : (%s)",e1,e2,e3);           :} 
+            ;
+/* Case: Condition */
+inner_cond  ::= inner_expr:e1 SUFFIX inner_expr:e2                                 {: RESULT = String.format("%s.endsWith(%s)",e2,e1);                 :}
+            |   inner_expr:e1 PREFIX inner_expr:e2                                 {: RESULT = String.format("%s.startsWith(%s)",e2,e1);               :}
+            ;
