@@ -1,8 +1,8 @@
 # Assignments in Compilers Course
 
 
-### HW1 - Create a recursive descent parser and a Java translator.
+### HW1 - Implementation of a LL(1) parser for a simple calculator and a translator to Java for a simple language	.
 
-### HW2 - blabla.
+### HW2 - Semantic Check (MiniJava).
 
-### HW3 - blabla.
+### HW3 - Generating intermediate code (MiniJava -> LLVM)	.
