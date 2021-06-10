@@ -1,0 +1,15 @@
+X.foo : 0
+X.bar : 4
+X.some_int : 5
+X.bla : 9
+X.foo : 0
+X.some_int : 8
+X.bar : 16
+A.bob : 0
+A.bar : 4
+A.foo : 5
+A.foo : 0
+A.baz : 8
+A.bob : 16
+A.bar : 24
+B.test : 32
